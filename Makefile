@@ -1,7 +1,7 @@
 TESTS_INIT=tests/minimal_init.lua
 TESTS_DIR=tests/
 
-src_files = $(wildcard fnl/*.fnl)
+src_files = $(wildcard fnl/**/*.fnl)
 out_files = $(src_files:fnl/%.fnl=lua/%.lua)
 
 compile: $(out_files)
@@ -10,7 +10,7 @@ lua/%.lua: fnl/%.fnl lua/
 	./fennel --compile $< > $@
 
 lua/:
-	mkdir lua
+	mkdir -p lua/forem-nvim
 
 test:
 	@nvim \
