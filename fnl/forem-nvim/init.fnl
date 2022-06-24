@@ -1,12 +1,54 @@
-(local M {})
 (local api (require :forem-nvim.api))
+(local notify (require :forem-nvim.notify))
+(local picker (require :forem-nvim.picker))
+
+(local M {})
+
+;; Utils
+
+(λ handle-api-error [response on-success]
+  (if (not= response.status 200)
+      (notify.error (.. "An error occurred: " response.body.error))
+      (on-success response)))
+
+(λ save-article [api-key]
+  (let [bufnr (vim.api.nvim_get_current_buf)
+        content (-> (vim.api.nvim_buf_get_lines bufnr 0 -1 1)
+                    (vim.fn.join "\n"))
+        id (vim.fn.expand "%:t")
+        response (api.save-article api-key id content)]
+    (handle-api-error response
+                      (fn []
+                        (notify.info "Article saved!")))))
+
+;; Autocmd
+
+(local group vim.api.nvim_create_augroup)
+(local cmd vim.api.nvim_create_autocmd)
+
+(local forem_group (group :forem_autocmds {:clear true}))
+
+(λ autocmds [api-key]
+  (cmd [:BufWriteCmd] {:group forem_group
+                       :pattern ["forem://my-article/*"]
+                       :callback #(save-article api-key)}))
+
+;; Setup
+
+(λ my-articles [api-key]
+  (fn []
+    (let [response (api.my-articles api-key)]
+      (handle-api-error response
+                        (fn [response]
+                          (picker.my-articles response.body))))))
 
 (λ setup [options]
-  (set M.get_articles (api.get-articles options.api_key)))
+  (set M.my_articles (my-articles options.api_key))
+  (autocmds options.api_key))
 
 (set M.setup (λ [options]
                (if (not options.api_key)
-                   (error "forem.nvim: api_key is required on setup")
+                   (notify.error "forem.nvim: api_key is required on setup")
                    (setup options))))
 
 M
