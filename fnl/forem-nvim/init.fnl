@@ -19,7 +19,8 @@
         response (api.save-article api-key id content)]
     (handle-api-error response
                       (fn []
-                        (notify.info "Article saved!")))))
+                        (notify.info "Article saved!")
+                        (vim.api.nvim_buf_set_option bufnr :modified false)))))
 
 ;; Autocmd
 
