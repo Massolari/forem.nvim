@@ -14,6 +14,17 @@
 (λ write-to-buffer [bufnr text]
   (vim.api.nvim_buf_set_lines bufnr 0 -1 false text))
 
+(λ open-my-article [article]
+  (vim.cmd (string.format ":edit forem://my-article/%s" article.id))
+  (let [bufnr (vim.api.nvim_get_current_buf)
+        article-body (get-article-body-lines article)]
+    (write-to-buffer bufnr article-body))
+  (vim.cmd "
+   set nomodified
+   set filetype=markdown
+   set buftype=acwrite
+   "))
+
 (λ my-articles-picker [articles]
   (pickers.new {}
                {:prompt_title "My Articles"
@@ -48,20 +59,12 @@
                                    (actions.select_default:replace (fn []
                                                                      (let [selection (action_state.get_selected_entry prompt_bufnr)]
                                                                        (actions.close prompt_bufnr)
-                                                                       (vim.cmd (string.format ":edit forem://my-article/%s"
-                                                                                               selection.value.id))
-                                                                       (let [bufnr (vim.api.nvim_get_current_buf)
-                                                                             article-body (get-article-body-lines selection.value)]
-                                                                         (write-to-buffer bufnr
-                                                                                          article-body))
-                                                                       (vim.cmd "
-                                                                       set nomodified
-                                                                       set filetype=markdown
-                                                                       set buftype=acwrite
-                                                                       ")))))}))
+                                                                       (open-my-article selection.value)))))}))
 
 (set M.my-articles
      (λ [articles]
        (: (my-articles-picker articles) :find)))
+
+(set M.open-my-article open-my-article)
 
 M
