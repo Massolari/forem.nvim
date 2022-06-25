@@ -1,44 +1,81 @@
-# A Neovim Plugin Template
+# Forem.nvim
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ellisonleao/nvim-plugin-template/default?style=for-the-badge)
-![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua)
+This plugin integrates Neovim with Forem platforms (for example, dev.to)
 
-A template repository for Neovim plugins.
+## Summary
 
-## Using it
+- [Features](#features)
+- [Dependencies](#dependencies)
+  - [Required](#required)
+  - [Optional](#optional)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Credits](#credits)
 
-Via `gh`:
+## Features
 
+- View and edit your articles
+- Create a new article
+
+## Dependencies
+
+### Required
+
+- [Plenary](https://github.com/nvim-lua/plenary.nvim)
+- [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+
+### Optional
+
+- [Notify](https://github.com/rcarriga/nvim-notify)
+
+## Installation
+
+Using [packer](https://github.com/wbthomason/packer.nvim):
+
+```lua
+use {
+    "Massolari/forem.nvim",
+    run = "make",
+    requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+    }
+}
 ```
-$ gh repo create my-plugin -p ellisonleao/nvim-plugin-template
+
+## Setup
+
+First, you need to generate an API key for the DEV platform.
+
+For dev.to, you can do it in [the end of the extension's page](https://dev.to/settings/extensions)
+
+With your API key, you need to pass it in the `setup` function:
+
+```lua
+require'forem-nvim'.setup {
+    api_key = "" -- Your API Key
+}
 ```
 
-Via github web page:
+## Usage
 
-Click on `Use this template`
+The plugin has the following functions available in `forem-nvim` module:
 
-![](https://docs.github.com/assets/cb-36544/images/help/repository/use-this-template-button.png)
+| function | description |
+| --- | --- |
+| `my_articles()` | Shows all your articles, where you can pick one to edit |
+| `create_article()` | Asks for a title, then creates an article with the given title and open it to edit |
 
-## Features and structure
+After you save the buffer it'll automatically be saved in the cloud.
 
-- 100% Lua
-- Github actions to run tests and check for formatting errors (Stylua)
-- Tests created with [busted](https://olivinelabs.com/busted/) + [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+**Note: these functions will only be available after the `setup` call**
 
-### Plugin structure
+## Contributing
 
-```
-.
-├── lua
-│   ├── plugin_name
-│   │   └── module.lua
-│   └── plugin_name.lua
-├── Makefile
-├── plugin
-│   └── plugin_name.lua
-├── README.md
-├── tests
-│   ├── minimal_init.lua
-│   └── plugin_name
-│       └── plugin_name_spec.lua
-```
+Please, don't hesitate in contributing by creating issues and opening pull requests.
+
+## Credits
+
+This plugin design and idea was inspired by [octo.nvim](https://github.com/pwntester/octo.nvim)
