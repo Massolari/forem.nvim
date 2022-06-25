@@ -65,12 +65,12 @@ require'forem-nvim'.setup {
 
 ## Usage
 
-The plugin has the following functions available in `forem-nvim` module:
+The plugin has the following commands and functions available in `forem-nvim` module:
 
-| function | description |
-| --- | --- |
-| `my_articles()` | Shows all your articles, where you can pick one to edit |
-| `create_article()` | Asks for a title, then creates an article with the given title and open it to edit |
+| function | command | description |
+| --- | --- | --- |
+| `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit |
+| `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit |
 
 After you save the buffer it'll automatically be saved in the cloud.
 
