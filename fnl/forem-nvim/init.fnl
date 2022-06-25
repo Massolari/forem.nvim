@@ -8,10 +8,9 @@
 
 (λ handle-api-error [response on-success]
   (let [start-status (-> response.status (tostring) (string.sub 1 2))]
-  (if (not= start-status "20")
-      (notify.error (.. "An error occurred: " response.body.error))
-      (on-success response)))
-  )
+    (if (not= start-status :20)
+        (notify.error (.. "An error occurred: " response.body.error))
+        (on-success response))))
 
 (λ save-article [api-key]
   (let [bufnr (vim.api.nvim_get_current_buf)
@@ -48,7 +47,7 @@
 (λ create-article [api-key]
   (fn []
     (let [(status title) (pcall vim.fn.input "New article's title: ")]
-      (when status
+      (when (and status (not= title ""))
         (let [response (api.create-article api-key title)]
           (handle-api-error response
                             (fn [response]
