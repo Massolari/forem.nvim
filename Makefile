@@ -4,8 +4,10 @@ TESTS_DIR=tests/
 
 src_files = $(wildcard fnl/**/*.fnl)
 out_files = $(src_files:fnl/%.fnl=lua/%.lua)
-test_files =$(wildcard tests/*.fnl)
+test_init= $(wildcard tests/*.fnl)
+test_files =$(wildcard tests/**/*.fnl)
 test_out_files = $(test_files:tests/%.fnl=tests/%.lua)
+test_out_init = $(test_init:tests/%.fnl=tests/%.lua)
 
 compile: $(out_files)
 
@@ -18,7 +20,7 @@ lua/:
 tests/%.lua: tests/%.fnl tests/
 	$(FENNEL_SCRIPT) --compile $< > $@
 
-test: $(test_out_files)
+test: $(test_out_files) $(test_out_init)
 	@nvim \
 		--headless \
 		--noplugin \
