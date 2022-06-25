@@ -18,8 +18,9 @@ jobs:
           neovim: true
           version: ${{ matrix.nvim-versions }}
 
+      - uses: mileschou/lua-action@master
+
       - name: run tests
-        uses: mileschou/lua-action@master
         run: make test
         env:
           PLENARY_DIR: vendor/plenary.nvim
