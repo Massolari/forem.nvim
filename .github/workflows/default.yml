@@ -18,7 +18,10 @@ jobs:
           neovim: true
           version: ${{ matrix.nvim-versions }}
 
-      - uses: mileschou/lua-action@master
+      - name: Lua action
+        uses: mileschou/lua-action@master
+        with:
+          args: lua -v
 
       - name: run tests
         run: make test
