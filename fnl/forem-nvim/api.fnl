@@ -43,7 +43,7 @@ tags:
        (put api-key (.. :/articles/ id)
             (vim.fn.json_encode {:article {:body_markdown content}}))))
 
-(set M.create-article
+(set M.new-article
      (λ [api-key title]
        (post api-key :/articles
              (vim.fn.json_encode {:article {:body_markdown (get-article-template title)}}))))
