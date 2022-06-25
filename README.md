@@ -1,6 +1,10 @@
 # Forem.nvim
 
-This plugin integrates Neovim with Forem platforms (for example, dev.to)
+<p align="center">This plugin integrates Neovim with Forem platforms (for example, dev.to)</p>
+
+https://user-images.githubusercontent.com/12272702/175755820-a2b93f4b-fd5c-416b-8b9e-d981335ef75c.mov
+
+https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-81c7-f30cd3301d43.mov
 
 ## Summary
 
