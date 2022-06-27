@@ -22,6 +22,8 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 - View and edit your articles
 - Create a new article
+- View the feed of articles
+- View an article from the feed
 
 ## Dependencies
 
@@ -69,6 +71,7 @@ The plugin has the following commands and functions available in `forem-nvim` mo
 
 | function | command | description |
 | --- | --- | --- |
+| `feed()` | `:Forem feed` | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
 | `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit |
 | `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit |
 
