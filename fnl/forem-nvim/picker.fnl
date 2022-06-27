@@ -4,26 +4,9 @@
 (local actions (require :telescope.actions))
 (local action_state (require :telescope.actions.state))
 (local conf (. (require :telescope.config) :values))
+(local Article (require :forem-nvim.article))
+(local buffer (require :forem-nvim.buffer))
 (local M {})
-
-(local new-line "\n")
-
-(λ get-article-body-lines [article]
-  (vim.split article.body_markdown new-line))
-
-(λ write-to-buffer [bufnr text]
-  (vim.api.nvim_buf_set_lines bufnr 0 -1 false text))
-
-(λ open-my-article [article]
-  (vim.cmd (string.format ":edit forem://my-article/%s" article.id))
-  (let [bufnr (vim.api.nvim_get_current_buf)
-        article-body (get-article-body-lines article)]
-    (write-to-buffer bufnr article-body))
-  (vim.cmd "
-   set nomodified
-   set filetype=markdown
-   set buftype=acwrite
-   "))
 
 (λ my-articles-picker [articles]
   (pickers.new {}
@@ -43,12 +26,12 @@
                                                                                   entry]
                                                                                (when (not self.state.bufname)
                                                                                  (let [article entry.value
-                                                                                       article-body (get-article-body-lines article)
+                                                                                       article-body (Article.get-body-lines article)
                                                                                        bufnr self.state.bufnr]
                                                                                    (vim.api.nvim_buf_set_option bufnr
                                                                                                                 :filetype
                                                                                                                 :markdown)
-                                                                                   (write-to-buffer bufnr
+                                                                                   (buffer.write bufnr
                                                                                                     article-body))))
                                                              :get_buffer_by_name (fn [_
                                                                                       entry]
@@ -59,12 +42,10 @@
                                    (actions.select_default:replace (fn []
                                                                      (let [selection (action_state.get_selected_entry prompt_bufnr)]
                                                                        (actions.close prompt_bufnr)
-                                                                       (open-my-article selection.value)))))}))
+                                                                       (buffer.open-my-article selection.value)))))}))
 
 (set M.my-articles
      (λ [articles]
        (: (my-articles-picker articles) :find)))
-
-(set M.open-my-article open-my-article)
 
 M
