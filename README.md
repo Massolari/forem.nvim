@@ -22,6 +22,8 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 - View and edit your articles
 - Create a new article
+- View the feed of articles
+- View an article from the feed
 
 ## Dependencies
 
