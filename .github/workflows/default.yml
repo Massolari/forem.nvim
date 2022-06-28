@@ -23,6 +23,9 @@ jobs:
         with:
           args: lua -v
 
+      - name: Build
+        run: make
+
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
