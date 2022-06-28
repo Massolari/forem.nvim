@@ -1,3 +1,2 @@
 vendor/plenary.nvim
-lua
 *.lua
