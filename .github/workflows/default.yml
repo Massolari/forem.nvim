@@ -23,7 +23,8 @@ jobs:
         with:
           args: lua -v
 
-      - name: run tests
-        run: make test
-        env:
-          PLENARY_DIR: vendor/plenary.nvim
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'auto: run build steps'
+          file_pattern: lua
