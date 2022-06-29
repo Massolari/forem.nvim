@@ -74,6 +74,7 @@ The plugin has the following commands and functions available in `forem-nvim` mo
 | `feed()` | `:Forem feed` | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
 | `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit |
 | `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit |
+| `open_by_url()` | `:Forem open_by_url` | Asks for an URL, then opens the article |
 
 After you save the buffer it'll automatically be saved in the cloud.
 
