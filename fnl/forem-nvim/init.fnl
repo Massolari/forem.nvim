@@ -83,6 +83,18 @@
                                     (buffer.open-article res.body)))))
           (notify.error "Could not find article data. Please reopen the feed.")))))
 
+(λ open-by-url [api-key]
+  (fn []
+    (let [(status url) (pcall vim.fn.input "Article's URL: ")]
+      (when (and status (not= url ""))
+        (let [path (string.match url "(%w+/[%w|-]+)$")]
+          (if path
+              (let [response (api.get-article-by-path api-key path)]
+                (handle-api-error response
+                                  (fn [res]
+                                    (buffer.open-article res.body))))
+              (notify.error (.. "This URL is not valid: " url))))))))
+
 ;; Autocmd
 
 (local forem_group (vim.api.nvim_create_augroup :forem_autocmds {:clear true}))
@@ -115,7 +127,8 @@
   (autocmds options.api_key)
   (set M.my_articles (my-articles options.api_key))
   (set M.new_article (new-article options.api_key))
-  (set M.feed (feed options.api_key)))
+  (set M.feed (feed options.api_key))
+  (set M.open_by_url (open-by-url options.api_key)))
 
 (set M.setup (λ [options]
                (if (not options.api_key)

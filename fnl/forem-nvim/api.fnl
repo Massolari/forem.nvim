@@ -55,4 +55,8 @@ tags:
     (λ [api-key id]
         (get api-key (.. :/articles/ id))))
 
+(set M.get-article-by-path
+    (λ [api-key path]
+        (get api-key (.. :/articles/ path))))
+
 M
