@@ -25,7 +25,7 @@ lua/:
 tests/%.lua: tests/%.fnl tests/
 	$(FENNEL_SCRIPT) --compile $< > $@
 
-test: $(test_out_files) $(test_out_init)
+test: $(test_out_files) $(test_out_init) $(out_files)
 	@nvim \
 		--headless \
 		--noplugin \

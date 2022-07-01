@@ -18,12 +18,13 @@ jobs:
           neovim: true
           version: ${{ matrix.nvim-versions }}
 
-      - name: Lua action
-        uses: mileschou/lua-action@master
+      - uses: leafo/gh-actions-lua@v9
         with:
-          args: lua -v
+          luaVersion: "5.4"
+          buildCache: false
 
       - name: run tests
         run: make test
         env:
           PLENARY_DIR: vendor/plenary.nvim
+          TELESCOPE_DIR: vendor/telescope.nvim
