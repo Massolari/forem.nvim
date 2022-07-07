@@ -43,7 +43,6 @@ Using [packer](https://github.com/wbthomason/packer.nvim):
 ```lua
 use {
     "Massolari/forem.nvim",
-    run = "make",
     requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim"
