@@ -39,9 +39,8 @@ local function my_articles_picker(articles)
   end
   return pickers.new({}, {prompt_title = "My Articles", finder = finders.new_table({results = articles, entry_maker = _1_}), previewer = previewers.new_buffer_previewer({title = "Article Preview", dyn_title = _2_, define_preview = _3_, get_buffer_by_name = _5_}), sorter = conf.prefilter_sorter({tag = "type_of", sorter = conf.generic_sorter({})}), attach_mappings = _6_})
 end
-local function _8_(articles)
-  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/picker.fnl:48")
+M["my-articles"] = function(articles)
+  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/picker.fnl:47")
   return my_articles_picker(articles):find()
 end
-M["my-articles"] = _8_
 return M

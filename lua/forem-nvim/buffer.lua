@@ -15,20 +15,18 @@ end
 local function set_feed_basic_options()
   return set_basic_options_and({{"modifiable", false}, {"spell", false}, {"buftype", "nowrite"}, {"swapfile", false}})
 end
-local function _2_(bufnr, text, _3finit)
-  _G.assert((nil ~= text), "Missing argument text on fnl/forem-nvim/buffer.fnl:19")
-  _G.assert((nil ~= bufnr), "Missing argument bufnr on fnl/forem-nvim/buffer.fnl:19")
+M.write = function(bufnr, text, _3finit)
+  _G.assert((nil ~= text), "Missing argument text on fnl/forem-nvim/buffer.fnl:18")
+  _G.assert((nil ~= bufnr), "Missing argument bufnr on fnl/forem-nvim/buffer.fnl:18")
   set_local("modifiable", true)
   return vim.api.nvim_buf_set_lines(bufnr, (_3finit or 0), -1, false, text)
 end
-M.write = _2_
-local function _3_()
+M["get-content"] = function()
   local bufnr = vim.api.nvim_get_current_buf()
   return vim.fn.join(vim.api.nvim_buf_get_lines(bufnr, 0, -1, 1), "\n"), bufnr
 end
-M["get-content"] = _3_
-local function _4_(article)
-  _G.assert((nil ~= article), "Missing argument article on fnl/forem-nvim/buffer.fnl:30")
+M["open-my-article"] = function(article)
+  _G.assert((nil ~= article), "Missing argument article on fnl/forem-nvim/buffer.fnl:27")
   vim.cmd(string.format(":edit forem://my-article/%s", article.id))
   do
     local bufnr = vim.api.nvim_get_current_buf()
@@ -37,21 +35,20 @@ local function _4_(article)
   end
   return set_basic_options_and({{"buftype", "acwrite"}, {"swapfile", false}})
 end
-M["open-my-article"] = _4_
-local function _5_(articles)
-  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/buffer.fnl:37")
+M["open-feed"] = function(articles)
+  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/buffer.fnl:34")
   vim.cmd(":edit forem://articles/feed")
   local bufnr = vim.api.nvim_get_current_buf()
   local max_columns
-  local function _6_(article, total)
+  local function _2_(article, total)
     return vim.fn.max({#article.title, #article.description, total})
   end
-  max_columns = fold(_6_, 0, articles)
+  max_columns = fold(_2_, 0, articles)
   local feed
-  local function _7_(article)
+  local function _3_(article)
     return Article["format-to-feed"](article, max_columns)
   end
-  feed = vim.tbl_flatten(vim.tbl_map(_7_, articles))
+  feed = vim.tbl_flatten(vim.tbl_map(_3_, articles))
   _G["forem-feed-articles"] = {}
   for _, article in pairs(articles) do
     _G["forem-feed-articles"][article.title] = {id = article.id, url = article.url}
@@ -60,9 +57,8 @@ local function _5_(articles)
   M.write(bufnr, feed, 5)
   return set_feed_basic_options()
 end
-M["open-feed"] = _5_
-local function _8_(article)
-  _G.assert((nil ~= article), "Missing argument article on fnl/forem-nvim/buffer.fnl:62")
+M["open-article"] = function(article)
+  _G.assert((nil ~= article), "Missing argument article on fnl/forem-nvim/buffer.fnl:58")
   vim.cmd(string.format(":edit forem://article/%s", article.title))
   do
     local bufnr = vim.api.nvim_get_current_buf()
@@ -73,5 +69,4 @@ local function _8_(article)
   end
   return set_feed_basic_options()
 end
-M["open-article"] = _8_
 return M

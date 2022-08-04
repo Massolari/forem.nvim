@@ -35,28 +35,24 @@ tags:
 (λ post [api-key endpoint body]
   (request curl.post api-key endpoint {: body}))
 
-(set M.my-articles (λ [api-key]
-                     (get api-key :/articles/me/all)))
+(λ M.my-articles [api-key]
+  (get api-key :/articles/me/all))
 
-(set M.save-article
-     (λ [api-key id content]
-       (put api-key (.. :/articles/ id)
-            (vim.fn.json_encode {:article {:body_markdown content}}))))
+(λ M.save-article [api-key id content]
+  (put api-key (.. :/articles/ id)
+       (vim.fn.json_encode {:article {:body_markdown content}})))
 
-(set M.new-article
-     (λ [api-key title]
-       (post api-key :/articles
-             (vim.fn.json_encode {:article {:body_markdown (get-article-template title)}}))))
+(λ M.new-article [api-key title]
+  (post api-key :/articles
+        (vim.fn.json_encode {:article {:body_markdown (get-article-template title)}})))
 
-(set M.feed (λ [api-key]
-              (get api-key :/articles)))
+(λ M.feed [api-key]
+  (get api-key :/articles))
 
-(set M.get-article
-    (λ [api-key id]
-        (get api-key (.. :/articles/ id))))
+(λ M.get-article [api-key id]
+  (get api-key (.. :/articles/ id)))
 
-(set M.get-article-by-path
-    (λ [api-key path]
-        (get api-key (.. :/articles/ path))))
+(λ M.get-article-by-path [api-key path]
+  (get api-key (.. :/articles/ path)))
 
 M

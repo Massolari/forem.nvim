@@ -32,7 +32,7 @@
                                                                                                                 :filetype
                                                                                                                 :markdown)
                                                                                    (buffer.write bufnr
-                                                                                                    article-body))))
+                                                                                                 article-body))))
                                                              :get_buffer_by_name (fn [_
                                                                                       entry]
                                                                                    entry.value.slug)})
@@ -44,8 +44,7 @@
                                                                        (actions.close prompt_bufnr)
                                                                        (buffer.open-my-article selection.value)))))}))
 
-(set M.my-articles
-     (λ [articles]
-       (: (my-articles-picker articles) :find)))
+(λ M.my-articles [articles]
+  (: (my-articles-picker articles) :find))
 
 M

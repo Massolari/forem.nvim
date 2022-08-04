@@ -35,39 +35,33 @@ local function post(api_key, endpoint, body)
   _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:35")
   return request(curl.post, api_key, endpoint, {body = body})
 end
-local function _2_(api_key)
+M["my-articles"] = function(api_key)
   _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:38")
   return get(api_key, "/articles/me/all")
 end
-M["my-articles"] = _2_
-local function _3_(api_key, id, content)
-  _G.assert((nil ~= content), "Missing argument content on fnl/forem-nvim/api.fnl:42")
-  _G.assert((nil ~= id), "Missing argument id on fnl/forem-nvim/api.fnl:42")
-  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:42")
+M["save-article"] = function(api_key, id, content)
+  _G.assert((nil ~= content), "Missing argument content on fnl/forem-nvim/api.fnl:41")
+  _G.assert((nil ~= id), "Missing argument id on fnl/forem-nvim/api.fnl:41")
+  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:41")
   return put(api_key, ("/articles/" .. id), vim.fn.json_encode({article = {body_markdown = content}}))
 end
-M["save-article"] = _3_
-local function _4_(api_key, title)
-  _G.assert((nil ~= title), "Missing argument title on fnl/forem-nvim/api.fnl:47")
-  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:47")
+M["new-article"] = function(api_key, title)
+  _G.assert((nil ~= title), "Missing argument title on fnl/forem-nvim/api.fnl:45")
+  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:45")
   return post(api_key, "/articles", vim.fn.json_encode({article = {body_markdown = get_article_template(title)}}))
 end
-M["new-article"] = _4_
-local function _5_(api_key)
-  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:51")
+M.feed = function(api_key)
+  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:49")
   return get(api_key, "/articles")
 end
-M.feed = _5_
-local function _6_(api_key, id)
-  _G.assert((nil ~= id), "Missing argument id on fnl/forem-nvim/api.fnl:55")
-  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:55")
+M["get-article"] = function(api_key, id)
+  _G.assert((nil ~= id), "Missing argument id on fnl/forem-nvim/api.fnl:52")
+  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:52")
   return get(api_key, ("/articles/" .. id))
 end
-M["get-article"] = _6_
-local function _7_(api_key, path)
-  _G.assert((nil ~= path), "Missing argument path on fnl/forem-nvim/api.fnl:59")
-  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:59")
+M["get-article-by-path"] = function(api_key, path)
+  _G.assert((nil ~= path), "Missing argument path on fnl/forem-nvim/api.fnl:55")
+  _G.assert((nil ~= api_key), "Missing argument api-key on fnl/forem-nvim/api.fnl:55")
   return get(api_key, ("/articles/" .. path))
 end
-M["get-article-by-path"] = _7_
 return M

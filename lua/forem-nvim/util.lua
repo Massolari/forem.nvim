@@ -1,5 +1,5 @@
 local M = {}
-local function _1_(fun, init, list)
+M.fold = function(fun, init, list)
   _G.assert((nil ~= list), "Missing argument list on fnl/forem-nvim/util.fnl:3")
   _G.assert((nil ~= init), "Missing argument init on fnl/forem-nvim/util.fnl:3")
   _G.assert((nil ~= fun), "Missing argument fun on fnl/forem-nvim/util.fnl:3")
@@ -9,31 +9,27 @@ local function _1_(fun, init, list)
   end
   return acc
 end
-M.fold = _1_
-local function _2_(opt, val)
+M["set-local"] = function(opt, val)
   _G.assert((nil ~= val), "Missing argument val on fnl/forem-nvim/util.fnl:9")
   _G.assert((nil ~= opt), "Missing argument opt on fnl/forem-nvim/util.fnl:9")
   do end (vim.opt_local)[opt] = val
   return nil
 end
-M["set-local"] = _2_
-local function _3_(opt_vals)
+M["set-locals"] = function(opt_vals)
   _G.assert((nil ~= opt_vals), "Missing argument opt-vals on fnl/forem-nvim/util.fnl:12")
-  for _, _4_ in pairs(opt_vals) do
-    local _each_5_ = _4_
-    local opt = _each_5_[1]
-    local val = _each_5_[2]
+  for _, _1_ in pairs(opt_vals) do
+    local _each_2_ = _1_
+    local opt = _each_2_[1]
+    local val = _each_2_[2]
     M["set-local"](opt, val)
   end
   return nil
 end
-M["set-locals"] = _3_
-local function _6_(file)
+M["is-executable?"] = function(file)
   _G.assert((nil ~= file), "Missing argument file on fnl/forem-nvim/util.fnl:16")
   return (1 == vim.fn.executable(file))
 end
-M["is-executable?"] = _6_
-local function _7_(url)
+M["open-browser-url"] = function(url)
   _G.assert((nil ~= url), "Missing argument url on fnl/forem-nvim/util.fnl:19")
   local _3fcmd
   if M["is-executable?"]("xdg-open") then
@@ -51,8 +47,7 @@ local function _7_(url)
     return print(("Could not find a command to open the URL: " .. url))
   end
 end
-M["open-browser-url"] = _7_
-local function _10_(count, noun, _3fplural)
+M["get-plural"] = function(count, noun, _3fplural)
   _G.assert((nil ~= noun), "Missing argument noun on fnl/forem-nvim/util.fnl:28")
   _G.assert((nil ~= count), "Missing argument count on fnl/forem-nvim/util.fnl:28")
   if (1 == count) then
@@ -65,5 +60,4 @@ local function _10_(count, noun, _3fplural)
     end
   end
 end
-M["get-plural"] = _10_
 return M
