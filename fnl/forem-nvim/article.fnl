@@ -15,6 +15,7 @@
   [(.. "🭽" (string.rep "▔" max-columns) "🭾")
    (.. " ## " article.title)
    (.. " " article.description)
+   (.. " 👤" article.user.name " (" article.user.username ")")
    "▏"
    (.. " 🕒 " article.reading_time_minutes " "
        (get-plural article.reading_time_minutes :minute) " of reading time")
