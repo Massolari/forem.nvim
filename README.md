@@ -56,13 +56,7 @@ First, you need to generate an API key for the DEV platform.
 
 For dev.to, you can do it in [the end of the extension's page](https://dev.to/settings/extensions)
 
-With your API key, you need to pass it in the `setup` function:
-
-```lua
-require'forem-nvim'.setup {
-    api_key = "" -- Your API Key
-}
-```
+With your API key, you just need to set it into the `FOREM_API_KEY` environment variable.
 
 ## Usage
 
