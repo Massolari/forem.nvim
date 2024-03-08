@@ -1,46 +1,52 @@
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local previewers = require("telescope.previewers")
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+local ____exports = {}
 local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local conf = (require("telescope.config")).values
-local Article = require("forem-nvim.article")
+local actionState = require("telescope.actions.state")
+local finders = require("telescope.finders")
+local pickers = require("telescope.pickers")
+local previewers = require("telescope.previewers")
 local buffer = require("forem-nvim.buffer")
-local M = {}
-local function my_articles_picker(articles)
-  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/picker.fnl:11")
-  local function _1_(article)
-    return {value = article, display = article.title, type_of = article.type_of, ordinal = (tostring(article.published_at) .. article.title)}
-  end
-  local function _2_(_, entry)
-    return entry.display
-  end
-  local function _3_(self, entry)
-    if not self.state.bufname then
-      local article = entry.value
-      local article_body = Article["get-body-lines"](article)
-      local bufnr = self.state.bufnr
-      vim.api.nvim_buf_set_option(bufnr, "filetype", "markdown")
-      return buffer.write(bufnr, article_body)
-    else
-      return nil
-    end
-  end
-  local function _5_(_, entry)
-    return entry.value.slug
-  end
-  local function _6_(prompt_bufnr, _)
-    local function _7_()
-      local selection = action_state.get_selected_entry(prompt_bufnr)
-      actions.close(prompt_bufnr)
-      return buffer["open-my-article"](selection.value)
-    end
-    return (actions.select_default):replace(_7_)
-  end
-  return pickers.new({}, {prompt_title = "My Articles", finder = finders.new_table({results = articles, entry_maker = _1_}), previewer = previewers.new_buffer_previewer({title = "Article Preview", dyn_title = _2_, define_preview = _3_, get_buffer_by_name = _5_}), sorter = conf.prefilter_sorter({tag = "type_of", sorter = conf.generic_sorter({})}), attach_mappings = _6_})
+local ____article = require("forem-nvim.article")
+local getBodyLines = ____article.getBodyLines
+local ____telescope_2Econfig = require("telescope.config")
+local configValues = ____telescope_2Econfig.values
+local function myArticlesPicker(articles)
+    return pickers.new(
+        {},
+        {
+            prompt_title = "My Articles",
+            finder = finders.new_table({
+                results = articles,
+                entry_maker = function(article)
+                    return {value = article, display = article.title, type_of = article.type_of, ordinal = article.title}
+                end
+            }),
+            previewer = previewers.new_buffer_previewer({
+                title = "Article Preview",
+                dyn_title = function(_, entry) return entry.display end,
+                define_preview = function(____self, entry)
+                    if ____self.state.bufname then
+                        return
+                    end
+                    local body = getBodyLines(entry.value)
+                    vim.api.nvim_set_option_value("filetype", "markdown", {buf = ____self.state.bufnr})
+                    buffer.write(____self.state.bufnr, body)
+                end,
+                get_buffer_by_name = function(_self, entry) return entry.value.slug end
+            }),
+            sorter = configValues.prefilter_sorter({
+                tag = "type_of",
+                sorter = configValues.generic_sorter({})
+            }),
+            attach_mappings = function(prompt_bufnr) return actions.select_default:replace(function()
+                local selection = actionState.get_selected_entry(prompt_bufnr)
+                actions.close(prompt_bufnr)
+                buffer.openMyArticle(selection.value)
+            end) end
+        }
+    )
 end
-M["my-articles"] = function(articles)
-  _G.assert((nil ~= articles), "Missing argument articles on fnl/forem-nvim/picker.fnl:47")
-  return my_articles_picker(articles):find()
+____exports.myArticles = function(articles)
+    myArticlesPicker(articles):find()
 end
-return M
+return ____exports

@@ -1,83 +1,79 @@
-local M = {}
-M.fold = function(fun, init, list)
-  _G.assert((nil ~= list), "Missing argument list on fnl/forem-nvim/util.fnl:3")
-  _G.assert((nil ~= init), "Missing argument init on fnl/forem-nvim/util.fnl:3")
-  _G.assert((nil ~= fun), "Missing argument fun on fnl/forem-nvim/util.fnl:3")
-  local acc = init
-  for _, el in pairs(list) do
-    acc = fun(el, acc)
-  end
-  return acc
+local ____lualib = require("lualib_bundle")
+local __TS__ArrayForEach = ____lualib.__TS__ArrayForEach
+local __TS__ArrayReduce = ____lualib.__TS__ArrayReduce
+local ____exports = {}
+local getOpenCommand
+____exports.setLocals = function(values)
+    __TS__ArrayForEach(
+        values,
+        function(____, ____bindingPattern0)
+            local value
+            local key
+            key = ____bindingPattern0[1]
+            value = ____bindingPattern0[2]
+            local ____value_0 = value
+            vim.opt_local[key] = ____value_0
+            return ____value_0
+        end
+    )
 end
-M["set-local"] = function(opt, val)
-  _G.assert((nil ~= val), "Missing argument val on fnl/forem-nvim/util.fnl:9")
-  _G.assert((nil ~= opt), "Missing argument opt on fnl/forem-nvim/util.fnl:9")
-  do end (vim.opt_local)[opt] = val
-  return nil
+____exports.getOption = function(option)
+    return option.get(option)
 end
-M["set-locals"] = function(opt_vals)
-  _G.assert((nil ~= opt_vals), "Missing argument opt-vals on fnl/forem-nvim/util.fnl:12")
-  for _, _1_ in pairs(opt_vals) do
-    local _each_2_ = _1_
-    local opt = _each_2_[1]
-    local val = _each_2_[2]
-    M["set-local"](opt, val)
-  end
-  return nil
-end
-M["is-executable?"] = function(file)
-  _G.assert((nil ~= file), "Missing argument file on fnl/forem-nvim/util.fnl:16")
-  return (1 == vim.fn.executable(file))
-end
-M["open-browser-url"] = function(url)
-  _G.assert((nil ~= url), "Missing argument url on fnl/forem-nvim/util.fnl:19")
-  local _3fcmd
-  if M["is-executable?"]("xdg-open") then
-    _3fcmd = "xdg-open"
-  elseif M["is-executable?"]("open") then
-    _3fcmd = "open"
-  elseif M["is-executable?"]("start") then
-    _3fcmd = "start"
-  else
-    _3fcmd = nil
-  end
-  if _3fcmd then
-    return vim.cmd((":!" .. _3fcmd .. " " .. url))
-  else
-    return vim.api.nvim_err_writeln(("Could not find a command to open the URL: " .. url))
-  end
-end
-M["get-plural"] = function(count, noun, _3fplural)
-  _G.assert((nil ~= noun), "Missing argument noun on fnl/forem-nvim/util.fnl:29")
-  _G.assert((nil ~= count), "Missing argument count on fnl/forem-nvim/util.fnl:29")
-  if (1 == count) then
-    return noun
-  else
-    return (_3fplural or (noun .. "s"))
-  end
-end
-M["open-float-menu"] = function(content, _3foptions)
-  _G.assert((nil ~= content), "Missing argument content on fnl/forem-nvim/util.fnl:34")
-  local width
-  do
-    local bigger = 0
-    for _, text in pairs(content) do
-      local text_width = vim.fn.len(text)
-      if (text_width > bigger) then
-        bigger = text_width
-      else
-        bigger = bigger
-      end
+____exports.isExecutable = function(path) return vim.fn.executable(path) == 1 end
+____exports.openUrlOnBrowser = function(url)
+    local cmd = getOpenCommand()
+    if not cmd then
+        vim.api.nvim_err_writeln("Could not find a command to open the URL: $[url]")
+        return
     end
-    width = bigger
-  end
-  local buffer = vim.api.nvim_create_buf(false, true)
-  local float_options = vim.tbl_extend("keep", (_3foptions or {}), {relative = "cursor", col = 0, row = 1, style = "minimal", width = width, border = "rounded", height = vim.fn.len(content)})
-  local win = vim.api.nvim_open_win(buffer, 0, float_options)
-  vim.api.nvim_buf_set_lines(buffer, 0, -1, true, content)
-  vim.api.nvim_buf_set_name(buffer, "forem://feed/floatmenu")
-  vim.api.nvim_buf_set_option(buffer, "modifiable", false)
-  vim.api.nvim_buf_set_option(buffer, "bufhidden", "delete")
-  return vim.api.nvim_win_set_option(win, "cursorline", true)
+    vim.fn.system((cmd .. " ") .. url)
 end
-return M
+getOpenCommand = function()
+    if ____exports.isExecutable("xdg-open") then
+        return "xdg-open"
+    end
+    if ____exports.isExecutable("open") then
+        return "open"
+    end
+    if ____exports.isExecutable("start") then
+        return "start"
+    end
+    return nil
+end
+____exports.pluralize = function(count, singular, plural)
+    if count == 1 then
+        return singular
+    end
+    return plural or singular .. "s"
+end
+____exports.openFloatMenu = function(content, options)
+    local width = __TS__ArrayReduce(
+        content,
+        function(____, acc, line) return math.max(acc, #line) end,
+        0
+    )
+    local bufnr = vim.api.nvim_create_buf(false, true)
+    local floatOptions = vim.tbl_extend("keep", options or ({}), {
+        relative = "cursor",
+        col = 0,
+        row = 1,
+        style = "minimal",
+        width = width,
+        border = "rounded",
+        height = #content
+    })
+    local window = vim.api.nvim_open_win(bufnr, false, floatOptions)
+    vim.api.nvim_buf_set_lines(
+        bufnr,
+        0,
+        -1,
+        true,
+        content
+    )
+    vim.api.nvim_buf_set_name(bufnr, "forem://feed/floatmenu")
+    vim.api.nvim_set_option_value("modifiable", false, {buf = bufnr})
+    vim.api.nvim_set_option_value("bufhidden", "delete", {buf = bufnr})
+    vim.api.nvim_set_option_value("cursorline", true, {win = window})
+end
+return ____exports

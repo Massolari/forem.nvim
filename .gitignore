@@ -1,3 +1,4 @@
 vendor/plenary.nvim
 .DS_Store
 /.envrc
+node_modules

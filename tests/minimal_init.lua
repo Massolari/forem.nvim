@@ -1,19 +1,20 @@
-local function load_module(module, source, _3fdirectory)
-  _G.assert((nil ~= source), "Missing argument source on tests/minimal_init.fnl:1")
-  _G.assert((nil ~= module), "Missing argument module on tests/minimal_init.fnl:1")
-  local module_dir = (_3fdirectory or ("/tmp/" .. module))
-  local is_not_a_directory = (vim.fn.isdirectory(module_dir) == 0)
-  if is_not_a_directory then
-    vim.fn.system({"git", "clone", source, module_dir})
-  else
-  end
-  return module_dir
+--[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+loadModule = function(module, source, directory)
+    local moduleDir = directory or "/tmp/" .. module
+    local directoryExists = vim.fn.isdirectory(moduleDir)
+    if directoryExists == 0 then
+        vim.fn.system({"git", "clone", source, moduleDir})
+    end
+    return moduleDir
 end
-local plenary_dir = (os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim")
-load_module("plenary.nvim", "https://github.com/nvim-lua/plenary.nvim", plenary_dir)
-local telescope_dir = load_module("telescope.nvim", "https://github.com/nvim-telescope/telescope.nvim")
-do end (vim.opt.rtp):append(".")
-do end (vim.opt.rtp):append(plenary_dir)
-do end (vim.opt.rtp):append(telescope_dir)
+plenaryDir = os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"
+loadModule("plenary.nvim", "https://github.com/nvim-lua/plenary.nvim", plenaryDir)
+telescopeDir = loadModule("telescope.nvim", "https://github.com/nvim-telescope/telescope.nvim")
+append = function(option, value)
+    option.append(option, value)
+end
+append(vim.opt.rtp, ".")
+append(vim.opt.rtp, plenaryDir)
+append(vim.opt.rtp, telescopeDir)
 vim.cmd("runtime plugin/plenary.vim")
-return require("plenary.busted")
+require("plenary.busted")
