@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "make",
-    "dev": "tstl -p ./src/tsconfig.json --watch"
+    "dev": "tstl --watch"
   },
   "keywords": [],
   "author": "",
