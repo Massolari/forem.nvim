@@ -1,6 +1,6 @@
 # Forem.nvim
 
-<p align="center">This plugin integrates Neovim with Forem platforms (for example, dev.to)</p>
+<p align="center">This plugin integrates Neovim with Forem platforms like [dev.to](https://dev.to)</p>
 
 https://user-images.githubusercontent.com/12272702/175755820-a2b93f4b-fd5c-416b-8b9e-d981335ef75c.mov
 
@@ -38,19 +38,36 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 ## Installation
 
-Using [packer](https://github.com/wbthomason/packer.nvim):
+### Using [lazy](https://github.com/folke/lazy.nvim):
+
+```lua
+{
+    "Massolari/forem.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "rcarriga/nvim-notify"
+    }
+}
+```
+
+### Using [packer](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 use {
     "Massolari/forem.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
+        "nvim-telescope/telescope.nvim",
+        "rcarriga/nvim-notify"
     }
 }
 ```
 
 ## Setup
+
+> [!NOTE]
+> These instructions are for the dev.to platform.
 
 First, you need to generate an API key for the DEV platform.
 
@@ -62,16 +79,14 @@ With your API key, you just need to set it into the `FOREM_API_KEY` environment 
 
 The plugin has the following commands and functions available in `forem-nvim` module:
 
-| function | command | description |
-| --- | --- | --- |
-| `feed()` | `:Forem feed` | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
-| `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit |
-| `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit |
-| `open_by_url()` | `:Forem open_by_url` | Asks for an URL, then opens the article |
+| function        | command              | description                                                                                  |
+| --------------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| `feed()`        | `:Forem feed`        | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
+| `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit                                       |
+| `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit           |
+| `open_by_url()` | `:Forem open_by_url` | Asks for a URL, then opens the article                                                       |
 
 After you save the buffer it'll automatically be saved in the cloud.
-
-**Note: these functions will only be available after the `setup` call**
 
 ## Contributing
 
