@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "target": "ESNext",
+    "rootDir": "src",
+    "outDir": "lua",
+    "lib": ["ESNext"],
+    "moduleResolution": "Node",
+    "types": ["lua-types/jit"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "exclude": ["./plugin", "./tests"],
+  "tstl": {
+    "luaTarget": "JIT",
+    "noImplicitSelf": true
+  }
+}
