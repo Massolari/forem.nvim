@@ -11,23 +11,22 @@ jobs:
     name: test
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - uses: rhysd/action-setup-vim@v1
         with:
           neovim: true
           version: ${{ matrix.nvim-versions }}
 
-      - name: Lua action
-        uses: mileschou/lua-action@master
-        with:
-          args: lua -v
+      - name: run tests
+        # When we run make test we are running install and compile too
+        run: make test
+        env:
+          PLENARY_DIR: vendor/plenary.nvim
 
-      - name: Build
-        run: make
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'auto: generate lua files'
-          file_pattern: lua
+          file_pattern: '*.lua'
