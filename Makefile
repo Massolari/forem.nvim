@@ -8,14 +8,15 @@ test_files =$(wildcard tests/**/*.ts)
 test_out_files = $(test_files:tests/%.ts=tests/%.lua)
 test_out_init = $(test_init:tests/%.ts=tests/%.lua)
 
-install:
-	npm ci
 
-compile: install
+compile: node_modules
 	mkdir -p lua/forem-nvim
 	npx tstl
 	npx tstl -p plugin/tsconfig.json
 	npx tstl -p tests/tsconfig.json
+
+node_modules: package.json
+	@test -d node_modules || npm clean-install
 
 test: compile
 	@nvim \
@@ -24,4 +25,4 @@ test: compile
 		-u ${TESTS_INIT} \
 		-c "PlenaryBustedDirectory ${TESTS_DIR} { minimal_init = '${TESTS_INIT}' }"
 
-.PHONY: install test compile
+.PHONY: test compile
