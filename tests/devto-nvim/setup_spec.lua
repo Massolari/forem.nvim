@@ -23,7 +23,7 @@ describe(
     local snapshot
 
     before_each(function()
-      vim.env.devto_API_KEY = "foo"
+      vim.env.DEVTO_API_KEY = "foo"
       _G.package.loaded["devto-nvim"] = nil
       devto_nvim = require("devto-nvim")
       snapshot = assert:snapshot()
@@ -36,7 +36,7 @@ describe(
     it(
       "should show a notification when no api key is set",
       function()
-        vim.env.devto_API_KEY = nil
+        vim.env.DEVTO_API_KEY = nil
         stub.new(vim, "notify")
         devto_nvim.my_articles()
         assert.stub(vim.notify).was.called()
