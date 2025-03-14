@@ -1,6 +1,6 @@
-# Forem.nvim
+# Devto.nvim
 
-<p align="center">This plugin integrates Neovim with Forem platforms like [dev.to](https://dev.to)</p>
+<p align="center">This plugin integrates Neovim with [dev.to](https://dev.to)</p>
 
 https://user-images.githubusercontent.com/12272702/175755820-a2b93f4b-fd5c-416b-8b9e-d981335ef75c.mov
 
@@ -35,7 +35,7 @@ You can use the plugin without any dependencies, but if you have any of the foll
 
 ```lua
 {
-    "Massolari/forem.nvim",
+    "Massolari/devto.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
         -- Optional
@@ -49,7 +49,7 @@ You can use the plugin without any dependencies, but if you have any of the foll
 
 ```lua
 use {
-    "Massolari/forem.nvim",
+    "Massolari/devto.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
         -- Optional
@@ -68,18 +68,18 @@ First, you need to generate an API key for the DEV platform.
 
 For dev.to, you can do it in [the end of the extension's page](https://dev.to/settings/extensions)
 
-With your API key, you just need to set it into the `FOREM_API_KEY` environment variable.
+With your API key, you just need to set it into the `DEVTO_API_KEY` environment variable.
 
 ## Usage
 
-The plugin has the following commands and functions available in `forem-nvim` module:
+The plugin has the following commands and functions available in `devto-nvim` module:
 
 | function        | command              | description                                                                                  |
 | --------------- | -------------------- | -------------------------------------------------------------------------------------------- |
-| `feed()`        | `:Forem feed`        | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
-| `my_articles()` | `:Forem my_articles` | Shows all your articles, then you can pick one to edit                                       |
-| `new_article()` | `:Forem new_article` | Asks for a title, then creates an article with the given title and open it to edit           |
-| `open_by_url()` | `:Forem open_by_url` | Asks for a URL, then opens the article                                                       |
+| `feed()`        | `:Devto feed`        | Shows fresh articles from the feed, then you can read it in Neovim or open it in the browser |
+| `my_articles()` | `:Devto my_articles` | Shows all your articles, then you can pick one to edit                                       |
+| `new_article()` | `:Devto new_article` | Asks for a title, then creates an article with the given title and open it to edit           |
+| `open_by_url()` | `:Devto open_by_url` | Asks for a URL, then opens the article                                                       |
 
 After you save the buffer it'll automatically be saved in the cloud.
 

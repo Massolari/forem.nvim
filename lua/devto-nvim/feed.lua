@@ -1,12 +1,12 @@
 local M = {}
-local api = require("forem-nvim.api")
-local buffer = require("forem-nvim.buffer")
-local notify = require("forem-nvim.notify")
-local util = require("forem-nvim.util")
+local api = require("devto-nvim.api")
+local buffer = require("devto-nvim.buffer")
+local notify = require("devto-nvim.notify")
+local util = require("devto-nvim.util")
 local set_locals = util.set_locals
 
 function M.open()
-  return vim.cmd("edit forem://articles/feed")
+  return vim.cmd("edit devto://articles/feed")
 end
 
 local function set_basic_options()
@@ -62,7 +62,7 @@ function M.open_article(location)
     return
   end
 
-  local article_data = _G.forem_feed_articles and _G.forem_feed_articles[title]
+  local article_data = _G.devto_feed_articles and _G.devto_feed_articles[title]
   if not article_data then
     notify.error("Could not find article data. Please reload the feed.")
     return
@@ -91,9 +91,9 @@ local function set_key_maps()
 end
 
 local function populate_global_feed_articles(articles)
-  _G.forem_feed_articles = {}
+  _G.devto_feed_articles = {}
   for _, article in ipairs(articles) do
-    _G.forem_feed_articles[article.title] = { id = article.id, url = article.url }
+    _G.devto_feed_articles[article.title] = { id = article.id, url = article.url }
   end
 end
 

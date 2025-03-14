@@ -1,11 +1,11 @@
 local M = {}
-local api = require("forem-nvim.api")
-local buffer = require("forem-nvim.buffer")
-local feed = require("forem-nvim.feed")
-local notify = require("forem-nvim.notify")
-local picker = require("forem-nvim.picker")
+local api = require("devto-nvim.api")
+local buffer = require("devto-nvim.buffer")
+local feed = require("devto-nvim.feed")
+local notify = require("devto-nvim.notify")
+local picker = require("devto-nvim.picker")
 
-local NO_API_KEY_ERROR = "forem.nvim: FOREM_API_KEY environment variable is missing"
+local NO_API_KEY_ERROR = "devto.nvim: DEVTO_API_KEY environment variable is missing"
 
 local function check_api_key(callback)
   if api.key() then
@@ -26,7 +26,7 @@ local function save_article()
   local id = tonumber(vim.fn.expand("%:t"))
 
   if not id then
-    notify.error("forem.nvim: Could not find article id")
+    notify.error("devto.nvim: Could not find article id")
     return
   end
 
@@ -79,17 +79,17 @@ local function open_by_url()
   api.get_article_by_path(path, buffer.load_article)
 end
 
-local forem_au_group = vim.api.nvim_create_augroup("forem_autocmds", {})
+local devto_au_group = vim.api.nvim_create_augroup("devto_autocmds", {})
 
 vim.api.nvim_create_autocmd("BufWriteCmd",
-  { group = forem_au_group, pattern = "forem://my-article/*", callback = save_article })
+  { group = devto_au_group, pattern = "devto://my-article/*", callback = save_article })
 vim.api.nvim_create_autocmd("BufEnter",
-  { group = forem_au_group, pattern = "forem://articles/feed", callback = feed.load })
+  { group = devto_au_group, pattern = "devto://articles/feed", callback = feed.load })
 vim.api.nvim_create_autocmd(
   "CursorMoved",
   {
-    group = forem_au_group,
-    pattern = "forem://*/floatmenu",
+    group = devto_au_group,
+    pattern = "devto://*/floatmenu",
     callback = function()
       local bufnum, line, column, off = unpack(vim.fn.getpos("."))
       if column <= 1 then
@@ -102,8 +102,8 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd(
   "BufEnter",
   {
-    group = forem_au_group,
-    pattern = "forem://*/floatmenu",
+    group = devto_au_group,
+    pattern = "devto://*/floatmenu",
     callback = function()
       vim.keymap.set(
         "n",

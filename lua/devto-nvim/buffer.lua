@@ -1,6 +1,6 @@
 local M = {}
-local Article = require("forem-nvim.article")
-local util = require("forem-nvim.util")
+local Article = require("devto-nvim.article")
+local util = require("devto-nvim.util")
 local set_locals = util.set_locals
 
 M.set_basic_options = function()
@@ -33,7 +33,7 @@ M.get_content = function()
 end
 
 M.open_my_article = function(article)
-  vim.cmd(":edit forem://my-article/" .. tostring(article.id))
+  vim.cmd(":edit devto://my-article/" .. tostring(article.id))
   local buffer = vim.api.nvim_get_current_buf()
   M.write(
     buffer,
@@ -44,7 +44,7 @@ M.open_my_article = function(article)
 end
 
 M.load_article = function(article)
-  vim.cmd(":edit forem://article/" .. article.title)
+  vim.cmd(":edit devto://article/" .. article.title)
   set_locals({ linebreak = true, textwidth = 80 })
   local buffer = vim.api.nvim_get_current_buf()
   local body = Article.get_body_lines(article)

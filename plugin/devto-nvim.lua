@@ -1,6 +1,6 @@
 local M = {}
-local forem = require("forem-nvim")
-local notify = require("forem-nvim.notify")
+local devto = require("devto-nvim")
+local notify = require("devto-nvim.notify")
 
 local commands = {
   feed = "feed",
@@ -10,18 +10,18 @@ local commands = {
 }
 
 vim.api.nvim_create_user_command(
-  "Forem",
+  "Devto",
   function(data)
     local args = data.args
 
     if args == commands.feed then
-      return forem.feed()
+      return devto.feed()
     elseif args == commands.my_articles then
-      return forem.my_articles()
+      return devto.my_articles()
     elseif args == commands.new_article then
-      return forem.new_article()
+      return devto.new_article()
     elseif args == commands.open_url then
-      return forem.open_url()
+      return devto.open_url()
     else
       notify.error("Unknown command: " .. args)
     end

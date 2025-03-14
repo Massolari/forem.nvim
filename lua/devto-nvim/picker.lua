@@ -1,6 +1,6 @@
 local M = {}
-local buffer = require("forem-nvim.buffer")
-local Article = require("forem-nvim.article")
+local buffer = require("devto-nvim.buffer")
+local Article = require("devto-nvim.article")
 
 local function my_articles_telescope_picker(articles)
   local telescope_config = require("telescope.config")

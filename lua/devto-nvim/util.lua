@@ -62,7 +62,7 @@ function M.open_float_menu(content, options)
     true,
     content
   )
-  vim.api.nvim_buf_set_name(bufnr, "forem://feed/floatmenu")
+  vim.api.nvim_buf_set_name(bufnr, "devto://feed/floatmenu")
   vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
   vim.api.nvim_set_option_value("bufhidden", "delete", { buf = bufnr })
   vim.api.nvim_set_option_value("cursorline", true, { win = window })

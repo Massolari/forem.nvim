@@ -1,9 +1,9 @@
 local M = {}
-local notify = require("forem-nvim.notify")
-local article = require("forem-nvim.article")
+local notify = require("devto-nvim.notify")
+local article = require("devto-nvim.article")
 
 function M.key()
-  return vim.env.FOREM_API_KEY
+  return vim.env.DEVTO_API_KEY
 end
 
 local BASE_URL = "https://dev.to/api"
@@ -102,7 +102,7 @@ local function request(method, endpoint, options)
       headers = {
         "api-key: " .. M.key(),
         "Content-Type: application/json",
-        "Accept: application/vnd.forem.api-v1+json"
+        "Accept: application/vnd.devto.api-v1+json"
       }
     },
     options
