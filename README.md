@@ -33,7 +33,6 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 ### Optional
 
-- [Notify](https://github.com/rcarriga/nvim-notify)
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim) or [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 
 ## Installation
@@ -48,7 +47,6 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
         -- Optional
         -- "nvim-telescope/telescope.nvim",
         -- or :ibhagwan/fzf-lua
-        "rcarriga/nvim-notify"
     }
 }
 ```
@@ -63,7 +61,6 @@ use {
         -- Optional
         -- "nvim-telescope/telescope.nvim",
         -- or :ibhagwan/fzf-lua
-        "rcarriga/nvim-notify"
     }
 }
 ```
