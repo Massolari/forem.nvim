@@ -1,6 +1,6 @@
 # Devto.nvim
 
-<p align="center">This plugin integrates Neovim with [dev.to](https://dev.to)</p>
+<p align="center">This plugin integrates Neovim with <a href="https://dev.to">dev.to</a></p>
 
 https://user-images.githubusercontent.com/12272702/175755820-a2b93f4b-fd5c-416b-8b9e-d981335ef75c.mov
 
