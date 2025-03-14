@@ -10,8 +10,6 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 - [Features](#features)
 - [Dependencies](#dependencies)
-  - [Required](#required)
-  - [Optional](#optional)
 - [Installation](#installation)
 - [Setup](#setup)
 - [Usage](#usage)
@@ -27,11 +25,7 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 
 ## Dependencies
 
-### Required
-
-- [Plenary](https://github.com/nvim-lua/plenary.nvim)
-
-### Optional
+You can use the plugin without any dependencies, but if you have any of the following plugins installed, the plugin will use them to enhance the experience:
 
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim) or [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 

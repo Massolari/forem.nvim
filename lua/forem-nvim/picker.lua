@@ -112,7 +112,8 @@ function M.my_articles(articles)
   vim.ui.select(vim.tbl_map(function(article) return article.title end, articles), {
     prompt = "My Articles",
   }, function(selection)
-    buffer.open_my_article(articles[selection])
+    local article = vim.tbl_filter(function(a) return a.title == selection end, articles)[1]
+    buffer.open_my_article(article)
   end)
 end
 
