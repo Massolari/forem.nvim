@@ -40,7 +40,7 @@ You can use the plugin without any dependencies, but if you have any of the foll
         "nvim-lua/plenary.nvim",
         -- Optional
         -- "nvim-telescope/telescope.nvim",
-        -- or :ibhagwan/fzf-lua
+        -- or "ibhagwan/fzf-lua"
     }
 }
 ```
@@ -54,7 +54,7 @@ use {
         "nvim-lua/plenary.nvim",
         -- Optional
         -- "nvim-telescope/telescope.nvim",
-        -- or :ibhagwan/fzf-lua
+        -- or "ibhagwan/fzf-lua"
     }
 }
 ```
