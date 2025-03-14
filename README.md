@@ -30,11 +30,11 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
 ### Required
 
 - [Plenary](https://github.com/nvim-lua/plenary.nvim)
-- [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 
 ### Optional
 
 - [Notify](https://github.com/rcarriga/nvim-notify)
+- [Telescope](https://github.com/nvim-telescope/telescope.nvim) or [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 
 ## Installation
 
@@ -45,7 +45,9 @@ https://user-images.githubusercontent.com/12272702/175755866-62be0b6c-31b2-4f45-
     "Massolari/forem.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
+        -- Optional
+        -- "nvim-telescope/telescope.nvim",
+        -- or :ibhagwan/fzf-lua
         "rcarriga/nvim-notify"
     }
 }
@@ -58,7 +60,9 @@ use {
     "Massolari/forem.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
+        -- Optional
+        -- "nvim-telescope/telescope.nvim",
+        -- or :ibhagwan/fzf-lua
         "rcarriga/nvim-notify"
     }
 }
