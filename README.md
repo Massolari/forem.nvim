@@ -61,9 +61,6 @@ use {
 
 ## Setup
 
-> [!NOTE]
-> These instructions are for the dev.to platform.
-
 First, you need to generate an API key for the DEV platform.
 
 For dev.to, you can do it in [the end of the extension's page](https://dev.to/settings/extensions)
