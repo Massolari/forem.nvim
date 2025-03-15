@@ -37,7 +37,6 @@ You can use the plugin without any dependencies, but if you have any of the foll
 {
     "Massolari/devto.nvim",
     dependencies = {
-        "nvim-lua/plenary.nvim",
         -- Optional
         -- "nvim-telescope/telescope.nvim",
         -- or "ibhagwan/fzf-lua"
@@ -51,7 +50,6 @@ You can use the plugin without any dependencies, but if you have any of the foll
 use {
     "Massolari/devto.nvim",
     requires = {
-        "nvim-lua/plenary.nvim",
         -- Optional
         -- "nvim-telescope/telescope.nvim",
         -- or "ibhagwan/fzf-lua"
